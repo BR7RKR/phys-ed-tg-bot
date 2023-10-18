@@ -2,8 +2,8 @@ from enum import Enum
 
 YOUTUBE_PREFIX = 'https://www.youtube.com/watch?v='
 YOUTUBE_LINK_PATTERN = r'(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'
-HELP_ANSWER = 'EMPTY'
-START_ANSWER = 'EMPTY'
+HELP_ANSWER = 'Бот нужен для просмотра статистики по физкультуре.\n Введите /stats для начала работы'
+START_ANSWER = 'Приветствую! Пожалуйста зарегестрируйтесь'
 
 
 class Emojis(Enum):
