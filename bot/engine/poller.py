@@ -2,6 +2,7 @@ import asyncio
 from asyncio import Task
 from typing import Optional
 
+from engine.constants import TG_POLL_INTERVAL
 from engine.exceptions import MissingTgClientError
 from clients.tg import TgClient
 
