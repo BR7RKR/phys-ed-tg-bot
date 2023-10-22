@@ -1,21 +1,13 @@
-from enum import Enum
+HELP_ANSWER = 'Бот нужен для просмотра статистики по физкультуре.\n Введите /stats для начала работы'
+START_ANSWER = 'Приветствую! Пожалуйста введите логин от личного кабинета абитуриента!'
+REPEATED_REGISTRATION_ANSWER = 'Вы уже зарегистрировались!'
+PROVIDE_PASSWORD_ANSWER = 'Введите пароль'
+SUCCESSFUL_REGISTRATION_ANSWER = 'Ура! Вы в системе!'
+WRONG_LOGIN_DATA_ANSWER = 'Неверный логин или пароль'
+SERVER_ERROR_ANSWER = 'Ошибка на сервере'
+REGISTRATION_ERROR_ANSWER = 'Ошибка при регистрации'
+REGISTRATION_CONFIRMATION_ERROR_ANSWER = 'Ошибка при получении данных. Возможно вы не зарегистрировались.\nДля регистрации напишите команду /start'
+STATS_SEARCH_ERROR_ANSWER = 'Не удалось найти статистику по физкультуре.'
+RATE_LIMIT_ERROR_ANSWER = 'Запросы можно слать только 2 раза за 24 часа'
 
-YOUTUBE_PREFIX = 'https://www.youtube.com/watch?v='
-YOUTUBE_LINK_PATTERN = r'(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'
-HELP_ANSWER = 'EMPTY'
-START_ANSWER = 'EMPTY'
-
-
-class Emojis(Enum):
-    EYE = '\U0001F441'
-    MAN = '\U0001F464'
-    CLOCK_1 = '\U0001F570'
-    CAMERA = '\U0001F4FD'
-    INBOX_TRAY = '\U0001F4E5'
-    CALENDAR = '\U0001F4C5'
-    DONE = '\U00002705'
-    IN_PROGRESS = '\U0000231B'
-    CANCELED = '\U0000274C'
-    SONG = '\U0001F3B5'
-    DURATION = '\U0001F551'
-    STONE_FACE = '\U0001F5FF'
+MAX_REQUESTS = 2
