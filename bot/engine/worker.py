@@ -1,7 +1,7 @@
 import asyncio
 from typing import List
 
-from clients.tg import TgClient, Update
+from clients.tg import Update
 from engine.distributor import CommandDistributor
 
 
