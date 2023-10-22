@@ -9,7 +9,8 @@ from clients.tg import Update
 from database.models import Student
 from engine.constants import START_ANSWER, HELP_ANSWER, REPEATED_REGISTRATION_ANSWER, PROVIDE_PASSWORD_ANSWER, \
     SUCCESSFUL_REGISTRATION_ANSWER, WRONG_LOGIN_DATA_ANSWER, SERVER_ERROR_ANSWER, REGISTRATION_ERROR_ANSWER, \
-    REGISTRATION_CONFIRMATION_ERROR_ANSWER, STATS_SEARCH_ERROR_ANSWER
+    REGISTRATION_CONFIRMATION_ERROR_ANSWER, STATS_SEARCH_ERROR_ANSWER, RATE_LIMIT_ERROR_ANSWER
+from engine.rate_limiter import RateLimiter
 from engine.session import BotSessionsBase, SessionEntity
 
 
@@ -136,15 +137,20 @@ class LoginCommand(Command):
 
 
 class StatsCommand(Command):
-    def __init__(self, tg_client: TgClient, sessions: BotSessionsBase, phys_client: PhysEdJournalClient):
+    def __init__(self, tg_client: TgClient, sessions: BotSessionsBase, phys_client: PhysEdJournalClient, rate_limiter: RateLimiter):
         self._name = '/stats'
         self._tg_client = tg_client
         self._sessions = sessions
         self._session: Optional[SessionEntity] = None
         self._phys_client = phys_client
+        self._rate_limiter = rate_limiter
 
     async def execute(self, upd: Update):
         id = upd.message.from_.id
+
+        if not self._rate_limiter.has_free_requests(id):
+            await self._tg_client.send_message(upd.message.chat.id, RATE_LIMIT_ERROR_ANSWER)
+            return
 
         student = await Student.get_or_none(user_tg_id=id)
         if student is None:
@@ -163,6 +169,8 @@ class StatsCommand(Command):
                                            f'\n Баллы за нормативы - {phys_stud.points_for_standard}'
                                            '\n'
                                            f'\n История посещений: \n{self._form_visit_history(phys_stud)}')
+
+        self._rate_limiter.add_request(id)
 
     def is_for(self, command_definer: Update):
         if command_definer.message is None:

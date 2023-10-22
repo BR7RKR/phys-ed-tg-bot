@@ -9,6 +9,7 @@ from clients.lk import LkClient
 from clients.phys import PhysEdJournalClient
 from engine.distributor import CommandDistributor
 from engine.poller import Poller
+from engine.rate_limiter import RateLimiter
 from engine.session import BotSessionsBase
 from engine.worker import Worker
 from clients.tg import TgClient
@@ -29,6 +30,7 @@ class Bot:
         self._bot_session = BotSessionsBase()
         self._lk_client = None
         self._phys_client = None
+        self._rate_limiter = RateLimiter()
 
     async def start(self):
         self._session = aiohttp.ClientSession()
@@ -43,8 +45,8 @@ class Bot:
                               CommandDistributor(self._tg_client,
                                                  self._bot_session,
                                                  self._lk_client,
-                                                 self._phys_client
-                                                 )
+                                                 self._phys_client,
+                                                 self._rate_limiter)
                               )
 
         await self._db.connect()

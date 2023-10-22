@@ -8,3 +8,6 @@ SERVER_ERROR_ANSWER = 'Ошибка на сервере'
 REGISTRATION_ERROR_ANSWER = 'Ошибка при регистрации'
 REGISTRATION_CONFIRMATION_ERROR_ANSWER = 'Ошибка при получении данных. Возможно вы не зарегистрировались.\nДля регистрации напишите команду /start'
 STATS_SEARCH_ERROR_ANSWER = 'Не удалось найти статистику по физкультуре.'
+RATE_LIMIT_ERROR_ANSWER = 'Запросы можно слать только 2 раза за 24 часа'
+
+MAX_REQUESTS = 2

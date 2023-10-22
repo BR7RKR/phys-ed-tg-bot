@@ -8,3 +8,8 @@ class SessionIsBusyError(Exception):
     def __init__(self, session_name):
         message: str = f"Session is busy with {session_name}"
         super().__init__(message)
+        
+
+class RateLimitError(Exception):
+    def __init__(self):
+        super().__init__('Request limit exceeded')
