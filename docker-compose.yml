@@ -7,7 +7,7 @@ services:
     container_name: tg-phys-bot
     env_file: ".env"
     volumes:
-      - db:/app/bot/db.sqlite3
+      - db:/app/bot
 
 volumes:
   db:
