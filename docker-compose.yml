@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  bot:
+    image: "mefchik/phys-journal-tg-bot:latest"
+    restart: always
+    container_name: tg-phys-bot
+    env_file: ".env"
+    volumes:
+      - db:/app/bot/db.sqlite3
+
+volumes:
+  db:
