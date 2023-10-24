@@ -1,4 +1,3 @@
 import os
 
 BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-WORKERS_AMOUNT_DEFAULT = 10
