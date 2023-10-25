@@ -97,7 +97,6 @@ async def stats_command(message: Message, state: FSMContext):
 
         if not rate_limiter.has_free_requests(id):
             await message.answer(RATE_LIMIT_ERROR_ANSWER)
-            raise Exception(RATE_LIMIT_ERROR_ANSWER)
             return
 
         student = await Student.get_or_none(user_tg_id=id)
