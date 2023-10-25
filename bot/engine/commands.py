@@ -1,3 +1,5 @@
+from logger import logging
+
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
@@ -23,7 +25,7 @@ async def help_command(message: Message, state: FSMContext):
 
         await message.answer(HELP_ANSWER)
     except Exception as e:
-        print(e)
+        logging.error(e)
 
 
 @dp.message(Command('start'))
@@ -41,7 +43,7 @@ async def start_command(message: Message, state: FSMContext):
 
         await state.set_state(RegStudent.login)
     except Exception as e:
-        print(e)
+        logging.error(e)
 
 
 @dp.message(RegStudent.login)
@@ -51,7 +53,7 @@ async def get_login(message: Message, state: FSMContext):
         await state.set_state(RegStudent.password)
         await message.answer(PROVIDE_PASSWORD_ANSWER)
     except Exception as e:
-        print(e)
+        logging.error(e)
 
 
 @dp.message(RegStudent.password)
@@ -73,12 +75,14 @@ async def get_password(message: Message, state: FSMContext):
         await student.save()
 
         await message.answer(SUCCESSFUL_REGISTRATION_ANSWER)
-    except WrongUsernameOrPasswordError:
+    except WrongUsernameOrPasswordError as e:
         await message.answer(WRONG_LOGIN_DATA_ANSWER)
-    except ServerError:
+        logging.error(e)
+    except ServerError as e:
         await message.answer(SERVER_ERROR_ANSWER)
+        logging.critical(e)
     except Exception as e:
-        print(e)
+        logging.error(e)
 
 
 @dp.message(Command('stats'))
@@ -93,6 +97,7 @@ async def stats_command(message: Message, state: FSMContext):
 
         if not rate_limiter.has_free_requests(id):
             await message.answer(RATE_LIMIT_ERROR_ANSWER)
+            raise Exception(RATE_LIMIT_ERROR_ANSWER)
             return
 
         student = await Student.get_or_none(user_tg_id=id)
@@ -114,4 +119,4 @@ async def stats_command(message: Message, state: FSMContext):
 
         rate_limiter.add_request(id)
     except Exception as e:
-        print(e)
+        logging.error(e)
