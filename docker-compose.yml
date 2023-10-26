@@ -11,3 +11,10 @@ services:
 
 volumes:
   db:
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 0.0.0.0/0
